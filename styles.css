@@ -1,0 +1,20 @@
+.textContainer {
+  width: 700px;
+  margin: 0 auto;
+}
+
+.textHeader {
+  text-align: center;
+  font-family: "Arial";
+}
+
+.textContent {
+  width: 700px;
+  line-height: 1.5;
+  font-family: "Arial";
+}
+
+header {
+  text-align: center;
+  font-family: "Arial";
+}

@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>CS373 Weekly Writeups</title>
+  <meta name="author" content="Ryder McDowell">
+
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <header>
+    Ryder McDowell - CS 373 - Weekly Writeups
+  </header>
+
+  <div class="textContainer">
+    <br />
+    <h2 class="textHeader">Week 1</h2>
+    <p class="textContent">
+      &emsp;&emsp;To begin defending against dark arts, we must first be able to identify them. This week’s content of CS 373 included some of the basics of malware, such as being able to identify different types of malware, analyzing their behavior in order to prevent future attacks, and who these attackers even are.<br /><br />
+
+      &emsp;&emsp;In the world of malware and malware defense, there are many descriptive terms that are used in order to communicate with each other professionally. Two very commonly used terms are white and black, which are used to describe if a piece of software is clean or dirty, respectively. This allows communities involved to be aware if certain software can be trusted. When the integrity of a sample is unknown, it is referred to as grey. Another basic for malware is the naming convention. The convention is as follows: type(:), platform(/), family, (.)variant, and (!)information. An example of this looks like: “Trojan:Win32/Reveton.N”.<br /><br />
+
+      &emsp;&emsp;A term that was new to me that ended up receiving some discussion in the lecture was a “polymorphic” piece of malware. This is a type of malware that will constantly change key elements of itself to avoid detection and make stopping it much harder. What was most interesting about polymorphic malware though, was its rarity. The lecturer, Christiaan Beek with Intel Security/McAfee Labs, stated that these pieces of malware were extremely hard to detect and diagnose, yet they were not extremely difficult to create. I believe that the reasoning for this was that they are not worth the extra effort/skill for a hacker to create when there are much simpler alternatives that can be just as successful. What’s particularly unsettling about this is that these threats are still not having to use the most powerful tricks, and can still be a massive problem.<br /><br />
+
+      &emsp;&emsp;Just like attackers have tools for creating malware, we also have tools for analyzing them. Each tool has a purpose, and they can do things such as monitor process events and network activity, close off connections, or even create fake connections in order to capture any outgoing requests. Some names of tools for analyzing malware include: Process Monitor, FakeNet, FileInsight, and Wireshark. The malware needs to be running in order to be able to analyze it though, so it is important to create simulated environments to run the malware in order to keep it contained and analyze safely. These are sometimes called “goats”, a sacrificial environment to let the malware do what it does.<br /><br />
+
+      &emsp;&emsp;So who really are these attackers? And what do they want? We classify malware attackers as APTs, or Advanced Persistent Threats, and they mostly consist of governments, organized crime groups, and competitors within a marketplace. One of their biggest motivators, unsurprisingly, is often money, but it can also be for ideology, revenge, or just for the fun. A typical pattern is also followed by these attackers. This pattern includes reconnaissance, weaponization, delivery, exploitation, installation, command and control, and finally, action.<br /><br />
+
+      &emsp;&emsp;What really drove home for me why malware defense and forensics and be so exciting, is the concept of baiting. Just like fishing, the excitement comes from knowing the targets and strategically setting up environments to get the best of them. Two forms of baiting were mentioned: honeypot baiting and baiting for malware replication. Honeypots are machines that are placed around the world waiting to receive a malware attack in order for it to be analyzed, and baiting for malware replication involves intentionally staging an environment that a piece of malware is being tested in to force certain behaviors (if those behaviors exist).<br /><br />
+    </p>
+  </div>
+</body>
+
+</html>
