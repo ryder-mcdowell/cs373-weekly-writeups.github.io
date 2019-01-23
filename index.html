@@ -13,11 +13,24 @@
 
 <body>
   <header>
-    Ryder McDowell - CS 373 - Weekly Writeups
+    Ryder McDowell - CS 373 - Weekly Writeups<br><br>
+    (Ordered newest to oldest)
   </header>
 
   <div class="textContainer">
     <br />
+    <h2 class="textHeader">Week 2</h2>
+    <p class="textContent">
+      &emsp;&emsp;This week’s content in Defense Against the Dark Arts covered malware forensics and the methods and tools involved with it. Two in-class labs were focused on this week as well that aimed to provide experience with the forensic tools FTK Imager and Volatility.<br><br>
+
+      &emsp;&emsp;The basis of malware forensics is to identify, preserve, and analyze evidence, and then present the results and findings to a law official for further judgment. An important aspect of being involved in malware forensics is to stay professional, unbiased, and respect your role as just a reporter of evidence, leaving the interpretation and ultimate decision on how to move forward to the court of law. Some of the important evidence acquisitions are memory, drive or long-term storage, and any network traffic.<br><br>
+
+      &emsp;&emsp;Because evidence is everything in forensics, there are specific precautions and procedures to follow when executing an investigation, many of which have already been predefined. One of these procedures revolves around the order of volatility within a computer system, and describes the order in which evidence should be collected from a system in order to ensure the most results. The order begins with system memory and temporary file systems such as as the swap file or paging file, and ends with any physical configurations or backups. It is also extremely important to reduce any contamination of potential evidence in the process gathering it.<br><br>
+
+      &emsp;&emsp;The first in-class lab of focus this week was a lab on the FTK Imager tool. This tool allows you to create forensic images of a drive or other source of storage, and export them to any destination, such as an external drive plugged into the target. This tool allows you to copy data off of the storage such as the master file table, page table file, hibernation file, and any other content on the drive. It can also export the data to different formats, included just raw. In the lab, we tested the tool by just creating an image of our virtual machine in order to play around with the different features and capabilities.<br><br>
+
+      &emsp;&emsp;The second lab we did in-class demonstrated the Volatility tool. This is a command line tool that is used to perform analysis on memory dumps and can provide a lot of information on what was stored in memory, such as information on the operating system, networking artifacts, process permissions, and what processes currently loaded in memory. A command that was covered in class was “dlllist”, which lists all of the currently loaded processes and their id’s, but also the processes’ loaded dll’s to see which are related.<br><br>
+    </p>
     <h2 class="textHeader">Week 1</h2>
     <p class="textContent">
       &emsp;&emsp;To begin defending against dark arts, we must first be able to identify them. This week’s content of CS 373 included some of the basics of malware, such as being able to identify different types of malware, analyzing their behavior in order to prevent future attacks, and who these attackers even are.<br /><br />
