@@ -29,17 +29,16 @@
 
       &emsp;&emsp;In class we used Yara and were prompted to find signatures that correctly matched two pieces of malware that we were provided. For the first one, I was able to find the string “Jenna Jam” on my own that identified the malware, and we were then given the complete answer which also included the string “AikaQ”.<br><br>
 
-      <img src="images/A.png" alt="A" height="300" width="700"><br><br>
+      <img src="images/A.png" alt="A" height="200" width="650"><br><br>
 
       &emsp;&emsp;One the second one, again I was able to identify the first string match of “DownloaderActiveX”; however, there was also another one which was a CLSID “c1b7e532-3ecb-4e9e-bb3a-2951ffe71c61”, but the complete answer did this with a binary pattern and jumps (the bracket notation).<br><br>
 
-      <img src="images/B.png" alt="B" height="300" width="700"><br><br>
+      <img src="images/B.png" alt="B" height="200" width="600"><br><br>
 
       &emsp;&emsp;The second lab we did this week was on day two and covered a tool called “Cuckoo”. Cuckoo analyzes the running of a process, and can behavior such as api calls by spawned processes; files being created, downloaded, or deleted; memory dumps; and network traffic. Cuckoo claims to be able to provide analysis on any type of file. In the lab we ran Cuckoo on the malware that we originally analyzed in week one. In conjunction with FakeNet, Cuckoo showed us the malware trying to download files such as “tongji2.exe” and creating a file called “svchest.exe” (rather than “svchost.exe”).<br><br>
 
       &emsp;&emsp;The wrap-up for this week included a discussion around the role of automation within identifying malware. Around 99% of signature creation is automated now; however, Craig Schmugar emphasized that the remaining 1% must still be done by hand because the work by a human is still far superior. While the work in signature recognition has largely been covered by automation, there is still human work to be done and new progress to be made such as in the field of AI with malware detection.<br><br>
 
-      <br>
       <h3>Blog Post:</h3>
 
       NEWLY FOUND KEYLOGGER MALWARE AND HOW TO IDENTIFY IT<br>
@@ -55,14 +54,14 @@
 
       After analyzing the behavior of this piece of malware with the tool Cuckoo, we are fairly certain that the malware is some sort of a keylogger because of the frequent references that are seen in the malware activity to files that relate to the keyboard and its drivers. Some of these targeted files include “wm.ime” (windows input method editor), system keyboard layouts, input hotkeys, and "kbdus.dll" (US keyboard functions). Some of this activity can be seen in the following figures (B, C) of logs from Cuckoo.<br><br>
 
-      <img src="images/D.png" alt="D" height="300" width="700"><br>
+      <img src="images/D.png" alt="D" height="200" width="750"><br>
       (B)
-      <br>
-      <img src="images/E.png" alt="E" height="300" width="700"><br>
+      <br><br>
+      <img src="images/E.png" alt="E" height="140" width="750"><br>
       (C)
       <br><br>
 
-      If you have recognized any of this behavior on your computer, you have most likely been infected by this malware and should immediately stop any actions that involve sensitive information before having the malware removed.<br><br>
+      If you have recognized any of this behavior on your computer, you have most likely been infected by this malware and should immediately stop any actions that involve sensitive information until the malware removed.<br><br>
     </p>
     <h2 class="textHeader">Week 2</h2>
     <p class="textContent">
