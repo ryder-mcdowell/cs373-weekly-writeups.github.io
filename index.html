@@ -19,6 +19,51 @@
 
   <div class="textContainer">
     <br />
+    <h2 class="textHeader">Week 3</h2>
+    <p class="textContent">
+      &emsp;&emsp;Defense Against the Dark Arts featured speaker Craig Schmugar this week, who covered malware defense and some of the basics for how people/software identify malware.<br><br>
+
+      &emsp;&emsp;This week’s content began by discussing the attack flow of malware operations, and when the opportunities for defense are. The first step in malware’s attack is called “First Contact”, which can be through avenues such as email, malvertising, or a watering hole (a frequently visited location by a target). Once the malware is in, it can begin local execution, but needs to go undiscovered to be ultimately successful. The amount of malware that is signed binary is increasing exponentially with 16 million malicious signed binaries in 2014, so this has become one popular way that malware has been able to hide themselves as legitimate. They can also change the time stamps of the files they create or modify, and they can use filenames that look very similar to OS filenames. Once a malware is on its target and running, it then harvests the information it is looking for such as emails, browser data, screen scrapes, and passwords and sends this data back through web or email.<br><br>
+
+      &emsp;&emsp;The first tool we looked at this week was Yara. Yara is a tool that matches signatures within file binaries to identify them malicious. This is part of what AV providers use to identify malicious content on their users’ machines. The skill in writing these yara rules is making them as concise as possible in order to keep download/update sizes small for users while also providing enough information to not provide any false positives. The key is balance, and the best rules will be short and never incorrectly identify because they match for patterns that are completely unique to the specific malware or type of malware.<br><br>
+
+      &emsp;&emsp;In class we used Yara and were prompted to find signatures that correctly matched two pieces of malware that we were provided. For the first one, I was able to find the string “Jenna Jam” on my own that identified the malware, and we were then given the complete answer which also included the string “AikaQ”.<br><br>
+
+      <img src="images/A.png" alt="A" height="300" width="700"><br><br>
+
+      &emsp;&emsp;One the second one, again I was able to identify the first string match of “DownloaderActiveX”; however, there was also another one which was a CLSID “c1b7e532-3ecb-4e9e-bb3a-2951ffe71c61”, but the complete answer did this with a binary pattern and jumps (the bracket notation).<br><br>
+
+      <img src="images/B.png" alt="B" height="300" width="700"><br><br>
+
+      &emsp;&emsp;The second lab we did this week was on day two and covered a tool called “Cuckoo”. Cuckoo analyzes the running of a process, and can behavior such as api calls by spawned processes; files being created, downloaded, or deleted; memory dumps; and network traffic. Cuckoo claims to be able to provide analysis on any type of file. In the lab we ran Cuckoo on the malware that we originally analyzed in week one. In conjunction with FakeNet, Cuckoo showed us the malware trying to download files such as “tongji2.exe” and creating a file called “svchest.exe” (rather than “svchost.exe”).<br><br>
+
+      &emsp;&emsp;The wrap-up for this week included a discussion around the role of automation within identifying malware. Around 99% of signature creation is automated now; however, Craig Schmugar emphasized that the remaining 1% must still be done by hand because the work by a human is still far superior. While the work in signature recognition has largely been covered by automation, there is still human work to be done and new progress to be made such as in the field of AI with malware detection.<br><br>
+
+      <br>
+      <h3>Blog Post:</h3>
+
+      NEWLY FOUND KEYLOGGER MALWARE AND HOW TO IDENTIFY IT<br>
+      Posted by: Ryder McDowell<br><br>
+
+      A new piece of malware has been identified at McDowell Anti-Malware Labs that could potentially breach the security of your passwords or other sensitive information.<br><br>
+
+      After file examination, we have identified Yara signatures that uniquely identify this malware and help diagnose whether you have been infected. The signatures to match for are “GetTuPian.asp”, “tsapcmp”, and “Keyboard”, and the full Yara rule can be seen in the following figure (A).<br><br>
+
+      <img src="images/C.png" alt="C" height="200" width="600"><br>
+      (A)
+      <br><br>
+
+      After analyzing the behavior of this piece of malware with the tool Cuckoo, we are fairly certain that the malware is some sort of a keylogger because of the frequent references that are seen in the malware activity to files that relate to the keyboard and its drivers. Some of these targeted files include “wm.ime” (windows input method editor), system keyboard layouts, input hotkeys, and "kbdus.dll" (US keyboard functions). Some of this activity can be seen in the following figures (B, C) of logs from Cuckoo.<br><br>
+
+      <img src="images/D.png" alt="D" height="300" width="700"><br>
+      (B)
+      <br>
+      <img src="images/E.png" alt="E" height="300" width="700"><br>
+      (C)
+      <br><br>
+
+      If you have recognized any of this behavior on your computer, you have most likely been infected by this malware and should immediately stop any actions that involve sensitive information before having the malware removed.<br><br>
+    </p>
     <h2 class="textHeader">Week 2</h2>
     <p class="textContent">
       &emsp;&emsp;This week’s content in Defense Against the Dark Arts covered malware forensics and the methods and tools involved with it. Two in-class labs were focused on this week as well that aimed to provide experience with the forensic tools FTK Imager and Volatility.<br><br>
