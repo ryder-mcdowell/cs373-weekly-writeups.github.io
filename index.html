@@ -18,6 +18,46 @@
   </header>
 
   <div class="textContainer">
+    <br>
+    <h2 class="textHeader">Week 4</h2>
+    <p class="textContent">
+      &emsp;&emsp;This week’s content is presented by Brad Antoniewicz who works for Intel Security carrying out attacks to provide organizations with vulnerability knowledge on their own system.<br><br>
+
+      &emsp;&emsp;Attacks are carried out through finding vulnerabilities in a system and exploiting them in a way that accomplishing whatever goal the attacker has. This can be by either taking advantage of bugs in a system or by taking advantage of poor programming or configuration. Over the past couple of decades, as the internet has become more integrated into our daily lives and more sensitive information is stored, hacking has gone from something fun and playful to something very dangerous. The good hackers, like Brad, hack ethically, and their goal is to help organizations keep their systems secure by pointing out vulnerabilities that they have found. Some companies, such as Samsung, have “bug bounty” programs that payout individuals who find these vulnerabilities and report them without doing anything harmful.<br><br>
+      
+      &emsp;&emsp;Some examples of potential vulnerabilities include weak passwords, authorization issues, and inadequate encryption, but this class focused on a form of input validation vulnerability called memory corruption. This means to access memory in an invalid way to get undefined behavior and exploit that behavior into getting some sort of payload or action to be performed. The tool that is demonstrated for aiding in this exploit for Windows machines is WinDbg which allows you to set breakpoints and stop execution of a program in order to explore the memory content and see what is being stored in registers at that point in time. This gives a hacker insight into what, when, and where something needs to be altered in order to have their payload executed.<br><br>
+      
+      &emsp;&emsp;The lab this week was somewhat of a guided hack to launch the system calculator through a browser exploitation, and WinDbg was a very important tool in doing this. We first began by playing around with different commands in WinDbg to get our fingers comfortable, and after setting a breakpoint and stepping through some commands we were able to find little easter eggs like the string “FluffyBunniesDon’tFlapOrQuack” at the address where esp is pointing and the decimal “31337” being in the eax register using “du poi(esp)” and “.formats eax” commands.<br><br>
+
+      <img src="images/6.png" alt="6" width="500"><br><br>
+      <img src="images/7.png" alt="7" width="600"><br><br>
+
+      &emsp;&emsp;After getting warmed up, we began the hack by opening up the javascript and changing one of the function variables to “msfPatternString”, which is a non-repeating string used for exploitation that lets us see where we are at in memory when the program crashes. The exploit was already setup for us by having eip on the stack overwritten with filler bytes “414141”. We can then use a tool called byakugan that, when we give it an offset, tells us which registers we have control of and at what offset.<br><br>
+
+      <img src="images/9.png" alt="9" width="500"><br><br>
+      <img src="images/8.png" alt="8" width="600"><br><br>
+      <img src="images/10.png" alt="10" width="500"><br><br>
+
+      &emsp;&emsp;We use this offset in the javascript function to make the s variable is the correct size to go right before eip, so that anything we add after will then be guaranteed to overwrite eip. We use 1028 / 2 because MakeString() actually returns two bytes for every on requested. We then concatenate the d-word “\u4242\u4242” to validate that we have done everything correctly with WinDbg.<br><br>
+
+      <img src="images/11.png" alt="11" width="600"><br><br>
+
+      &emsp;&emsp;According to instructor Antoniewicz, we’re now hacking! Next is to change the value we put at esp to the jpm command rather than the filler so that we can have the program run our shellcode without knowing exactly where it is in memory (trampoline method). We cheat a little bit to find the jmp command location as we know where to look already, so we search between address locations for the byte values using “s 54430000 5442b0000 ff e4”.<br><br>
+
+      <img src="images/12.png" alt="12" width="500"><br><br>
+
+      &emsp;&emsp;After adding the location of the jmp command (and learning that we have to swap the byte couples), we learn another “gotcha” in that we must also add an additional four filler bytes for the cleaning of the function arguments off the stack. Now we can concatenate the location of our shellcode and…<br><br>
+
+      <img src="images/13.png" alt="13" width="600"><br><br>
+
+      &emsp;&emsp;Yippee! We trigger the vulnerability, our shellcode gets run, and the calculator gets launched!<br><br>
+
+      &emsp;&emsp;The second class focused on lots of movie references, and also program heaps and more windows debugging. After calling new() to create an object, space on the heap gets allocated using the malloc() system call, but there are other APIs that can get called as well, building upon each other depending on the space needed. In cases of very small allocations (<16KB), a front-end allocator will get called which creates a low fragmentation heap. If more space is needed, a back end allocator will be invoked (16KB - 512KB), and if even more space is needed VirtualAlloc() will be called (>512KB). Internet Explorer uses VirtualAlloc(), which gives us information on how to do heap exploitations through browser applications.<br><br>
+
+      &emsp;&emsp;The particular vulnerability that this class focuses on is called a “use-after-free”, which has been a more common and successful attack recently than attacks using the stack. The basics of exploiting this vulnerability involves four steps. First, we free an object on the heap, and then we replace it with something that we control. After we then trigger the use of that object again, it uses whatever shellcode we’ve placed in the correct location.<br><br>
+
+      &emsp;&emsp;To execute on this, we use a command to enable the page heap on the virtual machine and user mode stack tracing, which gives us more detail in the crash report from Internet Explorer in WinDbg and let’s us see details about the current allocation status, size, and the history of heap allocation calls. This lets us know exactly where space on the heap is getting freed from a delete call. At this point we can then use javascript to write attacker control data to the same location and the same size as the space that was being freed where we were able to crash the browser application. To get our shellcode to run, we take advantage of how the heap allocator/VirtualAlloc() works and make make an allocation for a large amount of data which creates a predictable pattern with the different portions of the heap, letting us know where the heap portions are starting and ending. This ultimately lets us know where to position our shellcode in order to have it ran when the object that we placed in the free space gets used again.<br><br>
+    </p>
     <h2 class="textHeader">Week 3</h2>
     <p class="textContent">
       &emsp;&emsp;Defense Against the Dark Arts featured speaker Craig Schmugar this week, who covered malware defense and some of the basics for how people/software identify malware.<br><br>
