@@ -19,6 +19,42 @@
 
   <div class="textContainer">
     <br>
+    <h2 class="textHeader">Week 5</h2>
+    <p class="textContent">
+      This week’s content was presented by Aditya Kapoor with Intel Security and focused on windows memory manipulation and rootkits.<br><br>
+
+      Rootkits are a type of malware that attempt to enter kernel mode (.sys) files in order to obfuscate themselves. When they are at this level, they have unrestricted access to any part of memory, and because of the nature of windows operating system hiding system/kernel files, anything created can generally go under the radar to any antivirus running in user mode or to the user themself. In kernel mode, the malware will have even power with antivirus that is also in kernel mode, creating somewhat of a battle; however, many antivirus systems do not run in kernel mode and therefore will have less power than the malware.<br><br>
+
+      The lab of focus this week, Agony, involved observing a rootkit and it’s behavior with some tools that we are already familiar with and also some new ones such as Tuluka, a tool that raises anything fishy with things such as running processes, drivers, or kernel function pointers.<br><br>
+
+      First I extracted and ran the malware using the cuckoo analyzer, and the log showed a few files being created. Two of these files are tzres.dll and sortdefault.nls.<br><br>
+
+      <img src="images/14.png" alt="14" width="700"><br><br>
+      
+      The more interesting result of running this malware, however, was the hidden file created by the malware called wininit.sys. Instructor Kapoor demonstrated to us that doing a regular directory read will not display the file, and to actually have it be read, you need to specify files with a .sys extension.<br><br>
+      
+      <img src="images/15.png" alt="15" width="600"><br><br>
+
+      This is one of the behaviors of rootkits, as they are able to take control of kernel api functions to hide their tracks from antivirus and users. In our newly introduced tool Tuluka, I found three suspicious api endpoint addresses after running the malware, which explains why we were unable to see the created file, wininit.sys, earlier. Specifically, this file hidding is happening at kernel function NtQueryDirectoryFile, and wrapping this api the malware is able to hide the file. The malware does this by changing the address location of these functions to run their own, but they still call the original kernel function eventually to preserve functionality. Wrapping NtEnumerateValueKey allows the malware to hide registry values, and NtQuerySystemInformation let’s it hide running processes.<br><br>
+      
+      <img src="images/16.png" alt="16" width="700"><br><br>
+      
+      Using another new tool, LiveKD, a live debugger for reading Windows kernel memory, I was able to list the memory at the original and new addresses for these kernel functions. For NtEnumerateValueKey, I was able to see that the original address pointed to the correct function, however, the new one pointed to wininit.<br><br>
+
+      <img src="images/17.png" alt="17" width="600"><br><br>
+      
+      The next task was to remotely debug using a separate VM and WinDbg to find the exact byte offsets of when the overwritten kernel api’s call the original functions based on their start. After hooking up our debugee machine from the debugger and setting a breakpoint on the new suspicious address for NtEnumerateValueKey that was set by the malware, I stepped through the steps until the original functions was called and took the difference between the calling address and the beginning. The start was at 9d8bc480, and the original function got called at 9d8bc4d4, which is an offset of 84 bytes.<br><br>
+      
+      <img src="images/18.png" alt="18" width="700"><br><br>
+
+      For the overwritten NtQueryDirectoryFile function, the beginning was at 9d8bc050 and the original kernel function got called at 9d8bc086, which is an offset of 54 bytes.<br><br>
+      
+      <img src="images/19.png" alt="19" width="700"><br><br>
+
+      For NtQuerySystemInformation, the beginning was at 9d8bbf00, and the original function got called at 9d8bbf1a, which is an offset of 26 bytes.<br><br>
+
+      <img src="images/20.png" alt="20" width="700"><br><br>
+    </p>
     <h2 class="textHeader">Week 4</h2>
     <p class="textContent">
       &emsp;&emsp;This week’s content is presented by Brad Antoniewicz who works for Intel Security carrying out attacks to provide organizations with vulnerability knowledge on their own system.<br><br>
