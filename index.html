@@ -19,6 +19,32 @@
 
   <div class="textContainer">
     <br>
+    <h2 class="textHeader">Week 8</h2>
+    <p class="textContent">
+      This week’s content was presented by Eric Peterson with Intel Security/McAfee Labs. The focus was messaging security and email spam filtering.<br><br>
+
+      The main topic covered was email Phishing. An email Phishing attack involves a malicious source attempting to resemble the email of a legitimate source in order to gather information from you interacting with it. Often these emails present information that intends to invoke an emotional response in the target so that they are distracted, curious, or worried enough to follow along with the attack before noticing that the source is not legitimate.<br><br>
+
+      Like all social engineering attacks, the last wall of defense is the user. Because of this, Eric brought up the importance of education on email Phishing and walked us through a McAfee email Phishing quiz in order to demonstrate that it is often hard to tell the difference between something that is legitimate or not. What we learned is that links and anything asking for personal information is often a red flag. An interesting fact that was pointed out was that a HR departments were actually the most likely to fall for a Phishing attack, and they are also the ones with all of the employee’s information.<br><br>
+
+      A new tool introduced this week was Regex Coach. Eric demonstrated the use of this tool in-class and how it can be used to help in the creation of a regex statement. The tool lets you provide a target string and as you type into the regex field the program will dynamically highlight and show your progress with matching it. This content gave us an introduction to how spam identification and filtering can work by using regex.<br><br>
+      
+      The lab this week involved identifying spam data in a postgres database using SQL queries. After opening up the postgres instance, the first thing I did was look at how many of the items were actually marked as spam with the following query to get my target. Of the 100,000 rows, 85,000 were spam.<br><br>
+      
+      <img src="images/21.png" alt="21" width="700"><br><br>
+
+      After copying the data to csv file or examination, the first condition I added to the query was where the msubject field was equal to “Our New Stock Pick!”. This subject was very common amongst the spam messages and captured 61,862 spam messages.<br><br>
+      
+      <img src="images/22.png" alt="22" width="700"><br><br>
+
+      The next field that I looked at was the attachment hash. Some of the hashes amongst the spam emails very common, and adding these to the query condition increased the captured spam messages count to 69,522 spam messages.<br><br>
+      
+      <img src="images/23.png" alt="23" width="700"><br><br>
+
+      Finally, to practice some of the regex techniques we learned, I added the condition of the url starting with the string “cid:ii”, which was found on a majority of the spam message but not the legitimate ones. This brought the captured count to 69,573 of the total 85,000 spam messages, but on its own could capture 62,591.<br><br>
+
+      <img src="images/24.png" alt="24" width="700"><br><br>
+    </p>
     <h2 class="textHeader">Week 7</h2>
     <p class="textContent">
       This weeks content was presented by Cedric Cochin and focused on web security and how attacks can be carried out through the internet and web browsers.<br><br>
