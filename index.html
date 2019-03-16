@@ -19,6 +19,29 @@
 
   <div class="textContainer">
     <br>
+    <h2 class="textHeader">Week 9 & 10</h2>
+    <p class="textContent">
+      The content of these weeks were presented by Fernando Ruiz and cover the topic of mobile security. The malware analysis focuses on the Android platform specifically.<br><br>
+
+      Over the past 40 years, phones have come from being extremely analog to now being digital and data-connected. The has changed the landscape for mobile security immensely. In 2009, the Android operating system hit the market, and since it and iOS have become the two largest platforms. With the launch of Android, many players were pushed out of the market such as Symbian (Nokia) and Blackberry. The Android OS runs on the Linux kernel and uses Java as it’s programming language. It’s app file format is an “.apk” file. iOS runs on XNU (Mac OS X) and uses Objective-C as it’s programming language, an extension of the C language. It’s app file format is an “.ipa” file.<br><br>
+
+      One of the main components of an Android application is the presence of a Android Manifest file. This file is an xml file that declares important information about the application. One of the things the manifest defines is what permissions the application needs. This could be permissions such as sending sms messages, tracking location, or installing packages. In terms of malware, these permissions are very important as they give the attacker the access that they want to perform whatever malicious intent that they have. The manifest file also declares the app’s components such as the activities (runnable screens) and services.<br><br>
+
+      Several new tools were introduced to us this week. These tools include:
+    </p>
+    <ul class="listContent">
+        <li>VirusTotal, an online malware analyzer providing information for android applications such as required permissions and certificates</li>
+        <li>APKTool, a tool for decoding resource files into Smali code and letting you view Manifest files</li>
+        <li>Dex2Jar, a tool to convert Smali code into Java</li>
+        <li>JD-GUI, a tool that let’s us open and read .jar files as Java</li>
+    </ul>
+    <p class="textContent">
+      One of the labs this week involved doing static analysis of two android malware samples: FakePlayer and TapSnake. The first thing we did with these samples was review their reports in VirusTotal. For FakePlayer, the main risks that were highlighted by the service were the ability to send sms messages and perform payment. Some more red flags were that the apk was created with the application in debug mode and the application only contained one activity (suspicious for a movie player application). TapSnake included suspicious permissions such as accessing location, automatic start on boot, and full internet access. This application also only had one activity, and the certificate contained no information that gave signs of legitimacy.<br><br>
+
+      The next step was to decode the Android Manifest file from the encoded/compressed state of these samples using the tool apktools. This allowed us to read the file and validate that the information we receive from VirusTotal was correct in terms of the activities and permissions. We were also able to go through the main file and the resource files. To get the source files converted from Smali to Java (for readability), we used a tool called dex2jar. Then we were able to use the tool JD-GUI to look at the code. In the case of FakePlayer, the HelloWorld.class file attempts to send three text messages with code “798657” to premium rate numbers “3354” and “3354”.<br><br>
+
+      After conducting the static analysis, we moved on to a dynamic analysis of the malware. We did this by running an application called “WalkTxt.apk” using a program called Eclipse and an Android Emulator. On the emulator, we first created a fake local contact that contains the emulator number in the devices contacts in order to give the malware bait. Next, after running the malicious application, the application delivers an alert message “Application Not Licensed. We really hope you learned something from this. Check your phone bill;) Oh and don’t forget to buy the App from the Market.” We also see a text message come on the emulator with the message: “Hey, just downloaded App off the Internet, Walk and Text for Android. I’m stupid and cheap, it costed only 1 buck. Don’t steal like I did!”<br><br>
+    </p>
     <h2 class="textHeader">Week 8</h2>
     <p class="textContent">
       This week’s content was presented by Eric Peterson with Intel Security/McAfee Labs. The focus was messaging security and email spam filtering.<br><br>
