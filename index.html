@@ -16,9 +16,106 @@
     Ryder McDowell - CS 373 - Weekly Writeups<br><br>
     (Ordered newest to oldest)
   </header>
-
+  <br>
   <div class="textContainer">
-    <br>
+    <h2 class="textHeader">Final</h2>
+    <p class="textContent">
+      HackTheBox is an online penetration testing platform that allows users to practice hacking in an ethical way. They provide various different types of challenges, including web, crypto, and forensics; however, the first step to signing up is to hack the authentication page for an invite code.<br><br>
+
+      <img src="images/25.png" alt="14" width="600"><br><br>
+
+    </p>
+    <h3>The Invite:</h3>
+    <p class="textContent">
+      I began by inspecting the web page using Chrome DevTools. After searching around for a few minutes, I noticed a javascript source called “inviteapi.min.js”. This seemed to fit the theme of what I was trying to accomplish, getting an invite code, so I dug in and found a function called “makeInviteCode” inside the javascript.<br><br>
+
+      <img src="images/26.png" alt="14" width="700"><br><br>
+
+      I called this function in the console and received a successful response. In the response data there was a gibberish string, and luckily there was also a field that said the encryption type, ROT13.<br><br>
+
+      <img src="images/27.png" alt="14" width="700"><br><br>
+
+      I used Cryptii’s ROT13 decoder (https://cryptii.com/pipes/rot13-decoder) on the string which gave the output “In order to generate the invite code, make a POST request to /api/invite/generate.”<br><br>
+
+      <img src="images/28.png" alt="14" width="700"><br><br>
+
+      Using Postman, I hit this endpoint with a POST request and received a response with an encrypted code.<br><br>
+
+      <img src="images/29.png" alt="14" width="700"><br><br>
+
+      Based off of the code’s appearance, I made a guess and tried decoding it with a base64 decoder (https://www.base64decode.org/). The result was a string that looked much like a generated id, so I figured this was the final code.<br><br>
+
+      <img src="images/30.png" alt="14" width="700"><br><br>
+
+      I entered it into the invite code field and...<br><br>
+
+      <img src="images/31.png" alt="14" width="700"><br><br>
+
+      Woohoo! I got in and created my account.<br><br>
+   
+    </p>
+    <h3>Challenge Lernaean (Web, 20 points):</h3>
+    <p class="textContent">
+
+      The first challenge I chose to do was a web challenge called Lernaean. After going to the provided host for this challenge, I arrived at the following screen:<br><br>
+
+      <img src="images/32.png" alt="14" width="700"><br><br>
+
+      The page is an admin login page with a simple one-input form for a password. The site exclaimes “Please do not try to guess my password!”, which is quite obviously the biggest hint on what to do next, guess some passwords! The first thing I did was try the password “password”, but unfortunately that did not work-- always worth a shot. On my Kali Linux VM, I decided to use the tool Hydra, a password-cracker that can target web endpoints. On the Kali machines there are also password pools to use, and I chose to use the “rockyou” password pool. First, however, I had to figure out the format of the post request being sent. Using the tool Burp and after setting up my browser to use a local proxy, I was able to intercept the network requests and view them.<br><br>
+
+      <img src="images/33.png" alt="14" width="700"><br><br>
+
+      The post request format was simple, just giving a password string. I ran Hydra with the command “hydra -l ‘’ -P /usr/share/wordlsits/rockyou.txt.gz 159.65.208.41 -s 38441 http-post-form ‘/:password=^PASS^:F=Invalid Password!’. This command sends post requests to the provided endpoint, injecting each password in the pool into the request and using the provided response failure text to validate success. I got the network address for the site using a DNS lookup site on the domain. After running for a minute, Hydra gave an output for a successful password “leonardo”.<br><br>
+
+      <img src="images/34.png" alt="14" width="700"><br><br>
+
+      My excitement was soon halted, as after entering the password, I landed on a page only providing the text “Oops! Too slow!”<br><br>
+
+      <img src="images/35.png" alt="14" width="700"><br><br>
+
+      I found out that this was another sneaky hint, as after digging through the network history on Burp, I found the original post request that was made to login and its response. This response has the flag in a header tag, but also has javascript to immediately change the window location to the “too slow” page.<br><br>
+
+      <img src="images/36.png" alt="14" width="700"><br><br>
+
+      I turned in the flag, and success! First challenge completed.<br><br>
+
+    </p>
+    <h3>Challenge Sick Teacher (Crypto, 20 points):</h3>
+    <p class="textContent">
+
+      For the next challenge, I chose one from the crypto category called Sick Teacher. This challenge had me download a text document with ciphered text.<br><br>
+
+      <img src="images/37.png" alt="14" width="700"><br><br>
+
+      The first thing I did was google for a deciphering tool on the web, and I ended up picking one called quipquip (https://quipqiup.com/). I entered the ciphered text and it began to solve the puzzle. The app also shows the history of each iteration of solving the cipher, so you get to watch it’s progress. The end result was the following text.<br><br>
+
+      <img src="images/38.png" alt="14" width="700"><br><br>
+
+      It was missing certain, more difficult letters such as X and W. Another important letter that was missing was G, and after doing my own analysis by looking at unfinished words such as “?LOBE” and “FOR?ET” which, in context, were easy to notice were “GLOBE” and “FORGET”, I was able to ensure that the second to last word “FLA?” was “FLAG”, meaning that “LOREMIPSUMDOLORSITAMET” was the flag. Luckily, that word was completely solved for by quipquip.<br><br><br>
+    
+    </p>
+    <h3>Challenge Widescreen (Stego, 20 points):</h3>
+    <p class="textContent">
+
+      The first Stego challenge that I chose to do was Widescreen. I downloaded and opened the png image and, to my surprise, the flag was in plain sight. I thought for sure it was a trick or possibly a joke, but the flag submission was correct. After doing some research on the challenge to make sure this was all there was to it, I saw that other people were unable to see the flag at first and had to change the contrast or gamma to see the text. It turns out that the monitor I was using had the right coloring to be able to see the text immediately; however, on my laptop I couldn’t see it at all. To be legitimate, I still did complete the challenge by altering the image gamma.<br><br>
+
+      <img src="images/39.png" alt="14" width="700"><br><br>
+      <img src="images/40.png" alt="14" width="700"><br><br>
+
+    </p>
+    <h3>Challenge Unified (Stego, 20 points):</h3>
+    <p class="textContent">
+
+      Because the first Stego challenge I did turned out to be easier for me than the author intended, I chose to do another, the Unified challenge. This challenge had me download a text file that stated itself as a utf-8 message.<br><br>
+
+      <img src="images/41.png" alt="14" width="700"><br><br>
+
+      The first thing I did was convert the different languages to English; however, they all translated to the same text as the english sentence. After that, I had a strong feeling that the answer lie in the encoded characters. I remembered seeing a “Decoder” feature in the BurpSuit web analysis tool, and being that the file was a utf-8 message, the preferred encoding for email and web pages, I attempted to decode the message there.<br><br>
+
+      <img src="images/42.png" alt="14" width="700"><br><br>
+
+      The flag text was somewhat broken up by filler characters, but it was still there and noticeable. The Decoder tool in BurpSuite lets you choose to decode or encode with different types such as base64, hex, octal, and binary, but the quick solution that I used was the “Smart decode” button, which recognizes the encoding for you.<br><br>
+    </p>
     <h2 class="textHeader">Week 9 & 10</h2>
     <p class="textContent">
       The content of these weeks were presented by Fernando Ruiz and cover the topic of mobile security. The malware analysis focuses on the Android platform specifically.<br><br>
